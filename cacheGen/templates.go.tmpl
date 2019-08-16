@@ -1,0 +1,32 @@
+/*
+All the files in this folder are auto-generated.
+If for some reason it is badly formed, delete the cache folder then regenerate it
+with the command line "f7k cache".
+*/
+
+package cache
+
+import (
+{{- range .ImportCachePackages}}
+    "{{ $.CachePath }}{{ . }}"
+{{- end }}
+)
+
+
+func PreAppLoad() {
+{{- range .PreAppLoadFunctions}}
+    handleError({{.}}())
+{{- end }}
+}
+
+func PostAppLoad() {
+{{- range .PostAppLoadFunctions}}
+    handleError({{.}}())
+{{- end }}
+}
+
+func handleError(e error) {
+	if nil != e {
+		panic(e)
+	}
+}

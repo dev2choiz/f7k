@@ -1,0 +1,6 @@
+.idea
+#go.sum
+vendor
+internal/createProject/sample
+#internal/sampler
+debug
