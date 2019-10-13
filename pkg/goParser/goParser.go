@@ -4,6 +4,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"os"
 	"reflect"
 )
 
@@ -101,4 +102,24 @@ func (gp *GoParser) ExtractStructsSpecs(dir string) ([]*ast.TypeSpec, error) {
 	}
 
 	return specs, nil
+}
+
+func (gp *GoParser) IsStructExist(path, structName string) bool {
+	specs, err := gp.ExtractStructsSpecs(path)
+	if os.IsNotExist(err) {
+		return false
+	} else if err != nil {
+		panic(err)
+	}
+	for _, spec := range specs {
+		if spec.Name.Name != structName {
+			continue
+		}
+		t := reflect.TypeOf(spec.Type).String()
+		if t == "*ast.StructType" {
+			return true
+		}
+	}
+
+	return false
 }

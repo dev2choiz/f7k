@@ -6,6 +6,10 @@ import (
 )
 
 func (pr *prompt) Write(p []byte) (n int, err error) {
+	if pr.onlyIfVerbose && 0 == pr.verbosity {
+		return 0, nil
+	}
+
 	t := ""
 	if pr.timePrefix {
 		loc, err := time.LoadLocation("Europe/Paris")

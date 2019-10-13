@@ -40,8 +40,6 @@ func (ci *cacheYam) populateRouterMetadataWithYaml() *cacheYam {
 		panic(err)
 	}
 
-	//bug, unmarshall override checkPattern
-	// may be set in cache ?
 	r := Instance()
 	err = yaml.Unmarshal([]byte(p), r)
 	if err != nil {

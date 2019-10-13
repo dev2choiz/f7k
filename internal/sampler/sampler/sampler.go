@@ -49,6 +49,11 @@ func (i *archiver) copyFiles() *archiver {
 	_ = os.Remove(i.TargetPath + "/__debug_bin")
 	_ = exec.Command("rm", "-rf", filepath.Join(i.TargetPath, ".idea")).Run()
 	_ = exec.Command("rm", "-rf", filepath.Join(i.TargetPath, "vendor")).Run()
+	_ = exec.Command("rm", "-rf", filepath.Join(i.TargetPath, "api",  "openapi-spec")).Run()
+	_ = exec.Command("rm", "-rf", filepath.Join(i.TargetPath, "grpc", "res", "calculator", "calculatorpb")).Run()
+	_ = exec.Command("rm", "-rf", filepath.Join(i.TargetPath, "grpc", "res", "greet", "greetpb")).Run()
+	_ = exec.Command("rm", "-rf", filepath.Join(i.TargetPath, "rest")).Run()
+	_ = exec.Command("rm", "-rf", filepath.Join(i.TargetPath, "grpc", "server")).Run()
 
 	return i
 }

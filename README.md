@@ -69,5 +69,4 @@ check :
 curl localhost:8080
 ```
 
-output :  
->Hello world !
+[see grpc part..](docs/grpc.md)

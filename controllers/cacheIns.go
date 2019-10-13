@@ -48,7 +48,7 @@ func (ci *cacheIns) filterSpec(specs []*ast.TypeSpec) map[string]*ast.TypeSpec {
 		typ := spec.Type.(*ast.StructType)
 		for _, field := range typ.Fields.List {
 			if nil != field.Names {
-				continue	// because search a unnamed embedded struct
+				continue	// because we are searching a unnamed embedded struct
 			}
 			fieldType := field.Type.(*ast.SelectorExpr)
 			if "controllers" != fieldType.X.(*ast.Ident).Name {

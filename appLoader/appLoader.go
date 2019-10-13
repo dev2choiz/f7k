@@ -2,7 +2,11 @@ package appLoader
 
 import (
 	"github.com/dev2choiz/f7k"
+	"github.com/dev2choiz/f7k/fileFiller"
 	"github.com/dev2choiz/f7k/interfaces"
+	"github.com/dev2choiz/f7k/internal/createProject/installer"
+	"github.com/dev2choiz/f7k/internal/grpcBuilder"
+	"github.com/dev2choiz/f7k/internal/sampler/sampler"
 )
 
 type AppLoader struct {
@@ -67,3 +71,10 @@ func (l *AppLoader) ViewConfFile() string {
 func (l *AppLoader) PostAppLoad() interfaces.AppLoader {
 	return l
 }
+
+
+// Reference for ensure import if it is not used
+var _ = grpcBuilder.New
+var _ = fileFiller.New
+var _ = sampler.New
+var _ = installer.New

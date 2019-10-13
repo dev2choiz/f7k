@@ -1,16 +1,19 @@
 package prompt
 
 import (
+	"flag"
 	"fmt"
 	"github.com/fatih/color"
 	"strings"
 )
 
 type prompt struct {
-	Profiles   map[string]*Profile
-	Profile    string
-	writer     *color.Color
-	timePrefix bool
+	Profiles      map[string]*Profile
+	Profile       string
+	writer        *color.Color
+	timePrefix    bool
+	verbosity     uint8
+	onlyIfVerbose bool
 }
 
 func New(profile string) *prompt {
@@ -18,6 +21,7 @@ func New(profile string) *prompt {
 
 	pr := &prompt{}
 	pr.timePrefix = true
+	pr.verbosity = verbosity()
 	pr.Profiles = defaultProfiles()
 	if "" == profile {
 		profile = "info"
@@ -27,7 +31,25 @@ func New(profile string) *prompt {
 	if nil != err {
 		panic(err)
 	}
+
 	return pr
+}
+
+func verbosity() uint8 {
+	flag.Parse()
+	for _, arg := range flag.Args() {
+		if "-v" == arg {
+			return 1
+		}
+		if "-vv" == arg {
+			return 2
+		}
+		if "--verbose" == arg || "-vvv" == arg {
+			return 3
+		}
+	}
+
+	return 0
 }
 
 func (pr *prompt) New(name string) *prompt {
@@ -66,6 +88,12 @@ func (pr *prompt) ProfileNames() []string {
 
 func (pr *prompt) SetTime(time bool) *prompt {
 	pr.timePrefix = time
+
+	return pr
+}
+
+func (pr *prompt) OnlyIfVerbose(v bool) *prompt {
+	pr.onlyIfVerbose = v
 
 	return pr
 }

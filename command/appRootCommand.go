@@ -19,7 +19,10 @@ func NewRootCommand(cmds []interfaces.Command, f func()) *AppRootCommand {
 			f()
 		},
 	}
-	c.SetChildren(cmds)
+
+	for k := range cmds {
+		c.AddChild(cmds[k])
+	}
 
 	return c
 }

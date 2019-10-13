@@ -35,6 +35,7 @@ func getRootCmd() interfaces.Command {
 		c.AddChild(RunCmd())
 		c.AddChild(CreateProjectCmd())
 		c.AddChild(GenerateCacheCmd())
+		c.AddChild(GrpcBuildCmd())
 		c.AddChild(VersionCmd())
 
 		rootCmd = c
