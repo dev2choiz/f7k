@@ -72,7 +72,9 @@ func (ca *cacheAnn) writeControllerCacheAnnotations() string {
 	defer f.Close()
 
 	_ = f.Chmod(os.FileMode(0755))
-	_, _ = f.Write(w.Bytes())
-
+	_, err = f.Write(w.Bytes())
+	if err != nil {
+		panic(err)
+	}
 	return filename
 }

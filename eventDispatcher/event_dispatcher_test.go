@@ -31,3 +31,8 @@ func TestDispatch(t *testing.T) {
 
 	assert.Equal(t, want, got, "%s should be equal to %s", got, want)
 }
+
+func svc() *eventDispatcher.EventDispatcher {
+	d := eventDispatcher.Instance()
+	return d.(*eventDispatcher.EventDispatcher)
+}

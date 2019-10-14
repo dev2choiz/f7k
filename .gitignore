@@ -4,3 +4,4 @@ vendor
 internal/createProject/sample
 #internal/sampler
 debug
+profiler

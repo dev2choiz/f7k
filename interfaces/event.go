@@ -6,3 +6,7 @@ type Event interface {
 	Data() interface{}
 	SetData(data interface{})
 }
+
+type AsyncEvent interface {
+	Event
+}

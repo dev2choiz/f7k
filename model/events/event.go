@@ -21,5 +21,7 @@ func (e *Event) SetData(data interface{}) {
 	e.data = data
 }
 
-
+type AsyncEvent struct {
+	Event
+}
 

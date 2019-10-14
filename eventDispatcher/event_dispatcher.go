@@ -2,6 +2,7 @@ package eventDispatcher
 
 import (
 	"github.com/dev2choiz/f7k/interfaces"
+	"sync"
 )
 
 /*
@@ -11,15 +12,16 @@ This has the effect of only using the new struct throughout the application
 var Dispatcher interfaces.EventDispatcher
 
 type EventDispatcher struct {
-	Listeners   map[string][]interfaces.Handler
-	AsyncEvents map[string]map[string]chan interfaces.Event
+	Listeners           map[string][]interfaces.Handler
+	AsyncEventsMetadata map[string]interfaces.AsyncEventMetadata
+	mux                 sync.Mutex
 }
 
 func Instance() interfaces.EventDispatcher {
 	if nil == Dispatcher {
 		d := &EventDispatcher{}
 		d.Listeners = make(map[string][]interfaces.Handler)
-		d.AsyncEvents = make(map[string]map[string]chan interfaces.Event)
+		d.AsyncEventsMetadata = map[string]interfaces.AsyncEventMetadata{}
 		Dispatcher = d
 	}
 
