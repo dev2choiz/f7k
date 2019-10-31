@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/dev2choiz/f7k"
-	"github.com/dev2choiz/f7k/interfaces"
 	"github.com/dev2choiz/f7k/model/events"
 	"github.com/dev2choiz/f7k/pkg/prompt"
 	"html/template"
@@ -20,7 +19,11 @@ type cacheGen struct {}
 
 var cacheGenInstance *cacheGen
 
-var WaitingForListen []func(interfaces.Event)
+var WaitingForListen map[string]func(*events.CacheGenEvent)
+
+func init() {
+	WaitingForListen = make(map[string]func(*events.CacheGenEvent))
+}
 
 func Instance() *cacheGen {
 	if nil == cacheGenInstance {
@@ -42,10 +45,20 @@ func (i *cacheGen) Run() *cacheGen {
 	}
 
 	e := &events.CacheGenEvent{}
-	f7k.Dispatcher.Dispatch(events.OnCacheGenEvent, e)
+	e.SetData(e)
+
+	f7k.Dispatcher.InitDispatcher(events.OnCacheGenEvent, "cacheGen")
+	f7k.Dispatcher.WaitUntilAsyncListeners(events.OnCacheGenEvent)
+	em, err := f7k.Dispatcher.DispatchAsync(events.OnCacheGenEvent, "cacheGen", e)
+	if err != nil {
+		panic(err)
+	}
+	em.Wait()
+	_ = f7k.Dispatcher.StopDispatcher(events.OnCacheGenEvent, "cacheGen")
+
+	e = em.Payload().(*events.CacheGenEvent)
 	e.ImportCachePackages = f7k.Utils.Slice.DeduplicateStrings(e.ImportCachePackages)
 	f7k.Utils.Slice.DeduplicateStrings(e.ImportCachePackages)
-
 
 	for _, f := range e.GeneratedFiles {
 		i.Print("info", f)

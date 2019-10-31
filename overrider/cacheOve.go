@@ -21,8 +21,7 @@ type cacheOve struct {
 
 var dataYaml = make(map[string]Override)
 
-func OnCacheGenOverloader(e interfaces.Event) {
-	event := e.(*events.CacheGenEvent)
+func OnCacheGenOverloader(event *events.CacheGenEvent) {
 	co := &cacheOve{cacheGen.NewCacheListener()}
 	f := co.readYaml().writeCache()
 	if "" != f {

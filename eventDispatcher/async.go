@@ -405,16 +405,10 @@ func (ed *EventDispatcher) CloseListener(e, l string) {
 }
 
 func (al AsyncListenerMetadata) Payload() interface{} {
-	mux := &sync.Mutex{}
-	mux.Lock()
-	defer mux.Unlock()
 	return al.eventMetadata.Payload()
 }
 
 func (al AsyncListenerMetadata) SetPayload(v interface{}) {
-	mux := &sync.Mutex{}
-	mux.Lock()
-	defer mux.Unlock()
 	al.eventMetadata.SetPayload(v)
 }
 

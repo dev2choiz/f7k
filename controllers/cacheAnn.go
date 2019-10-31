@@ -17,10 +17,9 @@ type cacheAnn struct {
 	*cacheGen.CacheListener
 }
 
-func OnCacheGenAnnotations(e interfaces.Event) {
-	event := e.(*events.CacheGenEvent)
+func OnCacheGenAnnotations(event *events.CacheGenEvent) {
 	ca := &cacheAnn{cacheGen.NewCacheListener()}
-	f := ca.writeControllersAnnotations(e)
+	f := ca.writeControllersAnnotations(event)
 	if "" != f {
 		event.GeneratedFiles = append(event.GeneratedFiles, f)
 		event.PreAppLoadFunctions = append(event.PreAppLoadFunctions, "controller.PrepareControllerAnnotationsLoader")

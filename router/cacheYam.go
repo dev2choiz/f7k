@@ -5,7 +5,6 @@ import (
 	"github.com/dev2choiz/f7k"
 	"github.com/dev2choiz/f7k/cacheGen"
 	"github.com/dev2choiz/f7k/controllers"
-	"github.com/dev2choiz/f7k/interfaces"
 	"github.com/dev2choiz/f7k/model/events"
 	"gopkg.in/yaml.v2"
 	"html/template"
@@ -20,8 +19,7 @@ type cacheYam struct {
 	*cacheGen.CacheListener
 }
 
-func OnCacheGenYaml(e interfaces.Event) {
-	event := e.(*events.CacheGenEvent)
+func OnCacheGenYaml(event *events.CacheGenEvent) {
 	cr := controllers.RegistryInstance()
 	cr.Imports = make([]string, 0) // re-init imports
 	ci := cacheYam{cacheGen.NewCacheListener()}

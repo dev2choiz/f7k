@@ -3,7 +3,7 @@ package events
 const OnCacheGenEvent = "on_cache_generate_event"
 
 type CacheGenEvent struct {
-	Event
+	AsyncEvent
 	PreAppLoadFunctions  []string
 	PostAppLoadFunctions []string
 	ImportCachePackages  []string

@@ -46,11 +46,11 @@ func (i *CliServerLoader) LoadApp() {
 
 func (i *CliServerLoader) Load() interfaces.AppLoader {
 	// f7k cacheGen listeners
-	cacheGen.WaitingForListen = append(cacheGen.WaitingForListen, command.OnCacheGenCommand)
-	cacheGen.WaitingForListen = append(cacheGen.WaitingForListen, overrider.OnCacheGenOverloader)
-	cacheGen.WaitingForListen = append(cacheGen.WaitingForListen, controllers.OnCacheGenAnnotations)
-	cacheGen.WaitingForListen = append(cacheGen.WaitingForListen, controllers.OnCacheGenInstantiate)
-	cacheGen.WaitingForListen = append(cacheGen.WaitingForListen, router.OnCacheGenYaml)
+	cacheGen.WaitingForListen["command.OnCacheGenCommand"] = command.OnCacheGenCommand
+	cacheGen.WaitingForListen["overrider.OnCacheGenOverloader"] = overrider.OnCacheGenOverloader
+	cacheGen.WaitingForListen["controllers.OnCacheGenAnnotations"] = controllers.OnCacheGenAnnotations
+	cacheGen.WaitingForListen["controllers.OnCacheGenInstantiate"] = controllers.OnCacheGenInstantiate
+	cacheGen.WaitingForListen["router.OnCacheGenYaml"] = router.OnCacheGenYaml
 
 	i.AppLoader.Load()
 	f7k.Dispatcher = overrider.LoadEventDispatcherInstance()

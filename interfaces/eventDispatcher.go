@@ -10,11 +10,13 @@ type EventDispatcher interface {
 	Listen(eventName string, handler Handler)
 
 	// Async
+	InitDispatcher(eventName, disId  string)
 	DispatchAsync(eventName, dispName string, event AsyncEvent) (AsyncEventMetadata, error)
 	ListenAsync(eventName, listenerName string) (chan AsyncEvent,AsyncListenerMetadata, error)
 
 	StopDispatcher(eventName, dispatcherName string) error
 	WaitUntilAsyncListeners(eventName string)
+	CloseListener(eventName, listenerName string)
 }
 
 type AsyncListenerMetadata interface {

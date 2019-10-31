@@ -11,6 +11,6 @@ func (k *Kernel) ListenRequests() {
 	http.HandleFunc("/", k.Handle)
 
 	p := f7k.AppConfig.GetPort()
-	prompt.New("success").Printfln("Listen port %d\n", p)
+	prompt.New("info").Printfln("Listen port %d\n", p)
 	prompt.New("fatal").Println(http.ListenAndServe(fmt.Sprintf(":%d", p), nil).Error())
 }

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"github.com/dev2choiz/f7k"
 	"github.com/dev2choiz/f7k/cacheGen"
-	"github.com/dev2choiz/f7k/interfaces"
 	"github.com/dev2choiz/f7k/model/events"
 	"github.com/dev2choiz/f7k/pkg/goParser"
 	"go/ast"
@@ -18,8 +17,7 @@ type cacheIns struct {
 	*cacheGen.CacheListener
 }
 
-func OnCacheGenInstantiate(e interfaces.Event) {
-	event := e.(*events.CacheGenEvent)
+func OnCacheGenInstantiate(event *events.CacheGenEvent) {
 	cr := RegistryInstance()
 	cr.Imports = make([]string, 0) // re-init imports
 	ci := cacheIns{cacheGen.NewCacheListener()}
@@ -84,7 +82,7 @@ func (ci *cacheIns) writeCache() string {
 	}
 	wd, _ := os.Getwd()
 	dir := path.Join(wd, "cache", "controller")
-	_ = os.MkdirAll(dir, os.FileMode(755))
+	_ = os.MkdirAll(dir, os.FileMode(0755))
 	filename := filepath.Join(dir, "instances.go")
 	f, err := os.Create(filename)
 	if err != nil {

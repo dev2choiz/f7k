@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"github.com/dev2choiz/f7k"
 	"github.com/dev2choiz/f7k/cacheGen"
-	"github.com/dev2choiz/f7k/interfaces"
 	"github.com/dev2choiz/f7k/model/events"
 	"github.com/dev2choiz/f7k/pkg/prompt"
 	"html/template"
@@ -18,8 +17,7 @@ type cacheCom struct {
 	*cacheGen.CacheListener
 }
 
-func OnCacheGenCommand(e interfaces.Event) {
-	event := e.(*events.CacheGenEvent)
+func OnCacheGenCommand(event *events.CacheGenEvent) {
 	err := ParseYaml()
 	if nil != err {
 		prompt.New("info").Println("no command was found")
